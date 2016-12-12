@@ -1,12 +1,15 @@
 (ns gnome.transactions
   (:require [clojure.data.json :as json]
             [gnome.web :as web]
-            [gnome.util :as util]))
+            [gnome.util :refer :all]))
+
+
 
 (defn get-transactions
+  "Makes call to PLAID POST /connect/get and returns the 'transactions' field of the response"
   ([institution sub-option]
-   (let [options (web/request-opts institution (web/transactions-accounts-url))
-         response-body (web/plaid-get-transactions options)]
+   (let [options (web/request-metadata institution (web/transactions-accounts-url))
+         updated-options (merge options (web/plaid-options-json institution))
+         response-body (web/plaid-get-transactions updated-options)]
      (case sub-option
-       "--all" (:transactions response-body)))))
-
+       "--all" (println (:transactions response-body))))))

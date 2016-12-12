@@ -4,10 +4,12 @@
   (:gen-class))
 
 (defn usage []
+  "Constructs and prints the Usage string"
   (let [usage-string "Usage: gnome <institution> <option>
 
     options:
     transaction -- gets the transactions from last 30 days
+    accounts    -- displays the accounts info for the specific 'institution' mentioned
     help        -- Show this menu
 
     Institutions:
@@ -17,7 +19,7 @@
     (println usage-string)))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Usage: gnome <institution> <option> <sub-option>"
   [& args]
   (try
     (let [parsed-args (if (= (count args) 2) (conj (into [] args) "--all") (into [] args))
@@ -34,5 +36,3 @@
     (catch Exception e
       (println e)
       (usage))))
-
-  

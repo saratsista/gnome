@@ -15,5 +15,10 @@
 
 (defn load-access-token [institution]
   (let [access-token-key (keyword (str (name institution) "-access-token"))]
-    (access-token-key (credentials))
-    ))
+    (access-token-key (credentials))))
+
+(def accounts-map (:accounts (credentials)))
+
+(defn get-account-id
+  [institution]
+  ((keyword institution) accounts-map))

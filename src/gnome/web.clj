@@ -7,7 +7,13 @@
 
 (defn transactions-accounts-url [] (str (plaid-base-url) "/connect/get"))
 
-(defn request-opts
+(defn plaid-options-json
+  "Constructs the 'options' parameter in PLAID POST /connect/get"
+  [institution]
+  {:options (str "{\"account:\" \"" (get-account-id institution) "\"}")})
+
+(defn request-metadata
+  "Construct the options for the PLAID API call"
   [institution url]
   {
    :method       :post,
@@ -19,8 +25,9 @@
    })
 
 (defn plaid-get-transactions
+  "Makes call to PLAID POST /connect/get API and returns the whole reponse"
   [options]
+  ; TODO: Need to handle the 4xx and 5xx cases from upstream
   (let [response (http/request options :as :clojure)
         body (safe-json-read-str (slurp (:body response)))]
     body))
-
