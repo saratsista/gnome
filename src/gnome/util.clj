@@ -22,3 +22,6 @@
 (defn get-account-id
   [institution]
   ((keyword institution) accounts-map))
+
+
+(defn get-all-categories [category] ((keyword category) (:categories (credentials))))
