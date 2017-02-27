@@ -14,12 +14,24 @@
     help        -- Show this menu
 
     sub-options:
-      For expenses - The name of the cateogory
+      For expenses:
+        The name of the cateogory
+      For accounts:
+        `--all` -- gets information for all the accounts
+        `--balance` -- gets balance for all accounts or particular institution
+      For transactions:
+
 
     Institutions:
-      chase
-      chase-amazon
-      bofa"]
+      bofa
+      all (to consider all the institutions. Works only for 'expenses' option.)
+
+      Examples:
+      `lein run all expenses restaurants`   -- Gets the total expenses for restaurants
+      `lein run bofa expenses pets`         -- Gets the total expenses on bofa for pets
+      `lein run bofa accounts --balance`    -- Gets balance from bofa
+      `lein run bofa transactions --print`  -- prints all transactions from bofa"]
+
 
     (println usage-string)))
 
