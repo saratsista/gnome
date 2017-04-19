@@ -1,18 +1,23 @@
 (ns gnome.web
   (:require [compojure.core :refer :all]
+            [gnome.crypto :as crypto]
             [liberator.core :refer [resource defresource]]
             [liberator.dev :refer [wrap-trace]]))
 
+(defn- handle-balance
+  [institution]
+  (crypto/decrypt) 
+  )
 
-(defresource handle-balance
+(defresource balance
   [institution]
   :available-media-types ["text/html" "text/plain"]
-  :handle-ok (format "Institution is %s" institution))
+  :handle-ok (handle-balance institution))
 
 (defroutes app
   (GET "/" [] "Hello World!")
-  (GET "/balance/:institution" [institution] (handle-balance institution))
-  (GET "/balance" [] (handle-balance nil)))
+  (GET "/balance/:institution" [institution] (balance institution))
+  (GET "/balance" [] (balance nil)))
 
 (def handler
   (-> app
